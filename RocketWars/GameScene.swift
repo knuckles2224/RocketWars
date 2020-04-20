@@ -11,10 +11,31 @@ import GameplayKit
 
 class GameScene: SKScene {
     
-    
+    //Gloabal vars
     let player = SKSpriteNode(imageNamed: "rockShip") //adds the rocket ship image, initialized outside of scope
     
     let bulletSound = SKAction.playSoundFileNamed("bulletsoundeffect.wav", waitForCompletion: false) //adds the sound effect noise for bullet sounds when shooting
+    
+    let gameArea: CGRect
+    
+    override init(size: CGSize) {
+        //set up gameArea
+        let maxAspectRatio: CGFloat = 16.0/9.0
+        
+        let playableWidth = size.height / maxAspectRatio
+        
+        let margin = (size.width - playableWidth) / 2 //diff between scene and play area / 2
+        
+        gameArea = CGRect(x: margin, y: 0, width: playableWidth, height: size.height)
+        
+        
+        
+        super.init(size: size)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     //this function runs as soon as scene loads up
     override func didMove(to view: SKView) {
@@ -60,11 +81,14 @@ class GameScene: SKScene {
         for touch: AnyObject in touches {
          
             let pointofTouch = touch.location(in: self)
+            
             let previousPointOfTouch = touch.previousLocation(in: self)
             
             let movement = pointofTouch.x - previousPointOfTouch.x //calculate the origin of touch and whre last touch is
             
             player.position.x = player.position.x + movement //update the rocket with current rocket position and however far you moved
+            
+            //keep rocket ship in gameArea
         }
     }//end touchesMoved
     
