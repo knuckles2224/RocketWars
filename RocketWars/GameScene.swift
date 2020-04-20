@@ -18,6 +18,18 @@ class GameScene: SKScene {
     
     let gameArea: CGRect
     
+    //utility functions to generate random numbers for enemy ships
+    func random() -> CGFloat {
+        return CGFloat(Float(arc4random()) / Float(0xFFFFFFFF) )
+    //    return CGFloat.random(in: 0..<1)
+    }//end random()
+    
+    func random(min: CGFloat, max: CGFloat) -> CGFloat {
+        return random() * (max - min) + min
+    }//end random(min,max)
+    
+
+    
     override init(size: CGSize) {
         //set up gameArea
         let maxAspectRatio: CGFloat = 16.0/9.0
@@ -71,9 +83,47 @@ class GameScene: SKScene {
         
     }//end fireBullet
     
+    func spawnEnemy(){
+        
+        //where enemy can spawn
+        let onlyStartAt = random(min: gameArea.minX, max: gameArea.maxX)
+        
+        //where enemy can end up going to
+        let onlyEndAt = random(min: gameArea.minX, max: gameArea.maxX)
+        
+        //set up 2 CGPoints where enemy can spawn and end
+        let startPoint = CGPoint(x: onlyStartAt, y: self.size.height * 1.2) //enemy spawn
+        let endPoint = CGPoint(x: onlyEndAt, y: -self.size.height * 0.2)
+        
+        //spawn actual enemy
+        let enemy = SKSpriteNode(imageNamed: "22")
+        enemy.setScale(1)
+        enemy.position = startPoint
+        enemy.zPosition = 2
+        self.addChild(enemy)
+        
+        //move enemy to a random end point
+        let moveEnemy = SKAction.move(to: endPoint, duration: 2.0)
+       // let moveEnemy = SKAction.move(to: endPoint, duration: 1.5)
+        //check if bullet hits enemy
+        let deleteEnemy = SKAction.removeFromParent()
+        let enemySequence = SKAction.sequence([moveEnemy, deleteEnemy])
+        enemy.run(enemySequence)
+        
+        //get difference of start and endpoints of enemy to rotate ship correctly
+        let dx = endPoint.x - startPoint.x
+        let dy = endPoint.y - startPoint.y
+        
+        let amountToRotate = atan2(dy,dx)
+        enemy.zRotation = amountToRotate
+        
+        
+    }//end makeEnemy
+    
     //this runs when someone clicks or taps on the screen
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         fireBullet() //method call to fireBullet()
+        spawnEnemy()
     }//end fireBullet()
     
     //this runs when a player slides their fingers causing an event change
