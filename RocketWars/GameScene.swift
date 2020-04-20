@@ -88,7 +88,16 @@ class GameScene: SKScene {
             
             player.position.x = player.position.x + movement //update the rocket with current rocket position and however far you moved
             
-            //keep rocket ship in gameArea
+            //keep rocket ship in gameArea after moving
+            //check if it is too far right
+            if player.position.x > gameArea.maxX - player.size.width / 2{
+                player.position.x = gameArea.maxX - player.size.width/2 //keep player on right of screen
+            }
+            
+            //check if player is too right left
+            if player.position.x < gameArea.minX + player.size.width / 2 {
+                player.position.x = gameArea.minX + player.size.width / 2 //keep player on left point of gameArea
+            }
         }
     }//end touchesMoved
     
