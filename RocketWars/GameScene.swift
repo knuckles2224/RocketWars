@@ -64,8 +64,29 @@ class GameScene: SKScene {
         player.position = CGPoint(x: self.size.width/2, y: self.size.height * 0.2) //start in middle screen, but lower in y pos
         player.zPosition = 2 // 2 postion in front of background
         self.addChild(player) //add rocket image to scene
+        
+        startNewLevel() //start level call
     }//end didMove to view
     
+    func startNewLevel() {
+        //actions to spawn enemy
+        let spawn = SKAction.run(spawnEnemy)
+        
+        //gap between enemy spawning
+        let waitToSpawn = SKAction.wait(forDuration: 1)
+        
+        //call the sequence and let run in that order
+        let spawnSequence = SKAction.sequence([spawn, waitToSpawn])
+        
+        //keep spawning enemies
+        let spawnForever = SKAction.repeatForever(spawnSequence)
+        
+        //run action on the scene
+        self.run(spawnForever)
+        
+        
+        
+    }//end startNewLevel()
     //function firebullet gets called whem player taps screen, it will animate a shooting bullet from the player position going up the screen.
     func fireBullet() {
         //add bullet image to scene
@@ -83,6 +104,7 @@ class GameScene: SKScene {
         
     }//end fireBullet
     
+    //this function creates an enemy within bounds of the gameArea x values and then makes them move downward
     func spawnEnemy(){
         
         //where enemy can spawn
@@ -123,7 +145,7 @@ class GameScene: SKScene {
     //this runs when someone clicks or taps on the screen
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         fireBullet() //method call to fireBullet()
-        spawnEnemy()
+        
     }//end fireBullet()
     
     //this runs when a player slides their fingers causing an event change
