@@ -85,6 +85,39 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         startNewLevel() //start level call
     }//end didMove to view
     
+    //function that gets called when 2 bodies make contact with each other
+    func didBegin(_ contact: SKPhysicsContact) {
+        var contactBody1 = SKPhysicsBody()
+        var contactBody2 = SKPhysicsBody()
+        
+        //use the bit numbers declared in struct to organize the collision body
+        //lowest category bit number gets bodyA, higher bitnumber gets bodyB
+        if contact.bodyA.categoryBitMask < contact.bodyB.categoryBitMask {
+            contactBody1 = contact.bodyA
+            contactBody2 = contact.bodyB
+        } else {
+            contactBody1 = contact.bodyB
+            contactBody2 = contact.bodyA
+        }
+        
+        
+        //check if the player and the enemy college
+        if contactBody1.categoryBitMask == PhysicsGrouping.Player && contactBody2.categoryBitMask == PhysicsGrouping.Enemy{
+            
+            contactBody1.node?.removeFromParent()
+            contactBody2.node?.removeFromParent()
+            
+        }//end player and enemy contacts
+        
+        //check if the bullet made contact with the enemy
+        if contactBody1.categoryBitMask  == PhysicsGrouping.Bullet && contactBody2.categoryBitMask == PhysicsGrouping.Enemy{
+            
+            contactBody1.node?.removeFromParent()
+            contactBody2.node?.removeFromParent()
+            
+        }//end if bullet and enemy
+    }//end didBegin contact
+    
     func startNewLevel() {
         //actions to spawn enemy
         let spawn = SKAction.run(spawnEnemy)
@@ -150,7 +183,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         //set up struct physics grouping for emeny
         enemy.physicsBody!.categoryBitMask = PhysicsGrouping.Enemy
         enemy.physicsBody!.collisionBitMask = PhysicsGrouping.None
-        enemy.physicsBody!.contactTestBitMask = (PhysicsGrouping.Player | PhysicsGrouping.Bullet) //if enemy hits player or bullet
+        enemy.physicsBody!.contactTestBitMask = PhysicsGrouping.Player | PhysicsGrouping.Bullet //if enemy hits player or bullet
         self.addChild(enemy) //add the object to scene
         
         //move enemy to a random end point
