@@ -9,7 +9,7 @@
 import SpriteKit
 import GameplayKit
 
-class GameScene: SKScene {
+class GameScene: SKScene, SKPhysicsContactDelegate {
     
     //Gloabal vars
     let player = SKSpriteNode(imageNamed: "rockShip") //adds the rocket ship image, initialized outside of scope
@@ -17,6 +17,15 @@ class GameScene: SKScene {
     let bulletSound = SKAction.playSoundFileNamed("bulletsoundeffect.wav", waitForCompletion: false) //adds the sound effect noise for bullet sounds when shooting
     
     let gameArea: CGRect
+    
+    
+    struct PhysicsGrouping {
+        //turn off collisions for all objects
+        static let None : UInt32 = 0 //0 represents binary for 0
+        static let Player : UInt32 = 0b1 //binary for 1
+        static let Bullet : UInt32 = 0b10 //binary for 2
+        static let Enemy : UInt32 = 0b100 //binary for 4
+    }//end struct
     
     //utility functions to generate random numbers for enemy ships
     func random() -> CGFloat {
@@ -52,6 +61,8 @@ class GameScene: SKScene {
     //this function runs as soon as scene loads up
     override func didMove(to view: SKView) {
         
+        self.physicsWorld.contactDelegate = self// set up the physic contacts for the scene
+        
         //set up background image
         let backGround = SKSpriteNode(imageNamed: "earth") //image name can be found in assets
         backGround.size = self.size //set bg to scene size
@@ -63,6 +74,12 @@ class GameScene: SKScene {
         player.setScale(0.75) //scales the image
         player.position = CGPoint(x: self.size.width/2, y: self.size.height * 0.2) //start in middle screen, but lower in y pos
         player.zPosition = 2 // 2 postion in front of background
+        player.physicsBody = SKPhysicsBody(rectangleOf: player.size) //give the rocket a "physics body"
+        player.physicsBody!.affectedByGravity = false //turn off the gravity for our player object
+        //set up struct category for player now
+        player.physicsBody!.categoryBitMask = PhysicsGrouping.Player
+        player.physicsBody!.collisionBitMask = PhysicsGrouping.None
+        player.physicsBody!.contactTestBitMask = PhysicsGrouping.Enemy //physics group for when enemy hits player
         self.addChild(player) //add rocket image to scene
         
         startNewLevel() //start level call
@@ -94,6 +111,12 @@ class GameScene: SKScene {
         bullet.setScale(1)
         bullet.position = player.position //bullet will shoot where player rocket is
         bullet.zPosition = 1 //inbetween background and rocket
+        bullet.physicsBody = SKPhysicsBody(rectangleOf: bullet.size)
+        bullet.physicsBody!.affectedByGravity = false
+        //set up the grouping struct for bullet
+        bullet.physicsBody!.categoryBitMask = PhysicsGrouping.Bullet
+        bullet.physicsBody!.collisionBitMask = PhysicsGrouping.None //dont want any collisions
+        bullet.physicsBody!.contactTestBitMask = PhysicsGrouping.Enemy //will be told when bullet hits enemy
         self.addChild(bullet)
         
         
@@ -122,7 +145,13 @@ class GameScene: SKScene {
         enemy.setScale(1)
         enemy.position = startPoint
         enemy.zPosition = 2
-        self.addChild(enemy)
+        enemy.physicsBody = SKPhysicsBody(rectangleOf: enemy.size)
+        enemy.physicsBody!.affectedByGravity = false
+        //set up struct physics grouping for emeny
+        enemy.physicsBody!.categoryBitMask = PhysicsGrouping.Enemy
+        enemy.physicsBody!.collisionBitMask = PhysicsGrouping.None
+        enemy.physicsBody!.contactTestBitMask = (PhysicsGrouping.Player | PhysicsGrouping.Bullet) //if enemy hits player or bullet
+        self.addChild(enemy) //add the object to scene
         
         //move enemy to a random end point
         let moveEnemy = SKAction.move(to: endPoint, duration: 2.0)
