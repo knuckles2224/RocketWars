@@ -16,7 +16,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     let bulletSound = SKAction.playSoundFileNamed("bulletsoundeffect.wav", waitForCompletion: false) //adds the sound effect noise for bullet sounds when shooting
     
-    //let explodeSound = SKAction.playSoundFileNamed(<#T##soundFile: String##String#>, waitForCompletion: <#T##Bool#>)
+    let explosionSound = SKAction.playSoundFileNamed("explosionSound.wav", waitForCompletion: false)
     
     let gameArea: CGRect
     
@@ -123,9 +123,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         if contactBody1.categoryBitMask  == PhysicsGrouping.Bullet && contactBody2.categoryBitMask == PhysicsGrouping.Enemy {
             
             if contactBody2.node != nil {
-            spawnExplosion(spawnPosition: contactBody2.node!.position) //only explode the enemy
+                if contactBody2.node!.position.y > self.size.height {
+                    return //do nothing because bullet is out of screen
+                } else {
+                    spawnExplosion(spawnPosition: contactBody2.node!.position) //only explode the enemy
+
+                }
             }
-            
             contactBody1.node?.removeFromParent()
             contactBody2.node?.removeFromParent()
             
@@ -136,7 +140,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func spawnExplosion(spawnPosition: CGPoint) {
         
        
-        let explosion = SKSpriteNode(imageNamed: "explo") //create sprite node for explosion
+        let explosion = SKSpriteNode(imageNamed: "exploding") //create sprite node for explosion
         explosion.position = spawnPosition // set the postion to the passed in argument
         explosion.zPosition = 3
         
@@ -149,8 +153,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let fadeExplosion = SKAction.fadeOut(withDuration: 0.2)
         let deleteExplosion = SKAction.removeFromParent()
         
-        let explosionSequence = SKAction.sequence([scaleExplosion,fadeExplosion,deleteExplosion])
-        //REMARK : when adding sound, put "explodeSound" into the sequence
+        let explosionSequence = SKAction.sequence([explosionSound, scaleExplosion,fadeExplosion,deleteExplosion])
+        
         explosion.run(explosionSequence) //run the sprite node sequence
     }//end spawn explosion
     
@@ -211,7 +215,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         //spawn actual enemy
         let enemy = SKSpriteNode(imageNamed: "22")
-        enemy.setScale(1)
+        enemy.setScale(0.75)
         enemy.position = startPoint
         enemy.zPosition = 2
         enemy.physicsBody = SKPhysicsBody(rectangleOf: enemy.size)
