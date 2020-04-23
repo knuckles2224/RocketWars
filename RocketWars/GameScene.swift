@@ -15,7 +15,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     var gameLevel = 0 //keeps track of what level we are on
     
-    let scoreLabel = SKLabelNode(fontNamed: "The Bold Font ") //set up the label for score
+    var gameLives = 9 //the starting number of lives
+    
+    let gameLivesLabel = SKLabelNode(fontNamed: "The Bold Font")
+    
+    let scoreLabel = SKLabelNode(fontNamed: "The Bold Font") //set up the label for score
     
     //Gloabal vars
     let player = SKSpriteNode(imageNamed: "rockShip") //adds the rocket ship image, initialized outside of scope
@@ -90,14 +94,23 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         player.physicsBody!.contactTestBitMask = PhysicsGrouping.Enemy //physics group for when enemy hits player
         self.addChild(player) //add rocket image to scene
         
-        scoreLabel.text = "Score: 0"
+        //graphical information on the gameScore label
+        scoreLabel.text = "Score: \(gameScore)"
         scoreLabel.fontSize = 80
-        scoreLabel.fontColor = SKColor.purple
+        scoreLabel.fontColor = SKColor.white
         scoreLabel.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.left
-        scoreLabel.position = CGPoint(x: self.size.width * 0.20, y: 0.70) //position the label on the gamescene
-        scoreLabel.zPosition = 10 //make label later on top of everything
+        scoreLabel.position = CGPoint(x: self.size.width * 0.15, y: self.size.height * 0.95) //position the label on the gamescene
+        scoreLabel.zPosition = 10 //make label layer on top of everything
         self.addChild(scoreLabel)
         
+        //graphical information on the gameLivesLabel
+        gameLivesLabel.text = "Lives: \(gameLives)"
+        gameLivesLabel.fontSize = 80
+        gameLivesLabel.fontColor = SKColor.white
+        gameLivesLabel.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.right
+        gameLivesLabel.position = CGPoint(x: self.size.width * 0.85, y: self.size.height * 0.95)
+        gameLivesLabel.zPosition = 10
+        self.addChild(gameLivesLabel) //add the gameelivesLbael to the gameScene
         
         startNewLevel() //start level call
     }//end didMove to view
@@ -270,7 +283,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
        // let moveEnemy = SKAction.move(to: endPoint, duration: 1.5)
         //check if bullet hits enemy
         let deleteEnemy = SKAction.removeFromParent()
-        let enemySequence = SKAction.sequence([moveEnemy, deleteEnemy])
+        let loseLife = SKAction.run(decrementGameLife)
+        let enemySequence = SKAction.sequence([moveEnemy, deleteEnemy, loseLife])
         enemy.run(enemySequence)
         
         //get difference of start and endpoints of enemy to rotate ship correctly
@@ -331,6 +345,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             startNewLevel() //call from level 4 to level 5
         }
         
-        
     }//end AddScore
+    
+    func decrementGameLife() {
+        gameLives = gameLives - 1
+        gameLivesLabel.text = "Lives: \(gameLives)"
+        
+        //flash lives to the screen
+        let enhanceLivesText = SKAction.scale(to: 1.5, duration: 0.20)
+        let normalizeLivesText = SKAction.scale(to: 1.0, duration: 0.20)
+        let flashLivesLabel = SKAction.sequence([enhanceLivesText,normalizeLivesText])
+        gameLivesLabel.run(flashLivesLabel)
+    }
 }//end class GameScene
