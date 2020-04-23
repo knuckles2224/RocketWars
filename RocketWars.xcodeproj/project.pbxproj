@@ -17,6 +17,7 @@
 		3D82DCDF244C071800C25BEA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3D82DCDD244C071800C25BEA /* LaunchScreen.storyboard */; };
 		3D82DCE7244C316200C25BEA /* bulletsoundeffect.wav in Resources */ = {isa = PBXBuildFile; fileRef = 3D82DCE6244C316200C25BEA /* bulletsoundeffect.wav */; };
 		3DC6709424503912004BB1BC /* explosionSound.wav in Resources */ = {isa = PBXBuildFile; fileRef = 3DC6709324503912004BB1BC /* explosionSound.wav */; };
+		3DC6709624518825004BB1BC /* theBoldFont.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3DC6709524518825004BB1BC /* theBoldFont.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +33,7 @@
 		3D82DCE0244C071800C25BEA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3D82DCE6244C316200C25BEA /* bulletsoundeffect.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = bulletsoundeffect.wav; sourceTree = "<group>"; };
 		3DC6709324503912004BB1BC /* explosionSound.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = explosionSound.wav; sourceTree = "<group>"; };
+		3DC6709524518825004BB1BC /* theBoldFont.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = theBoldFont.ttf; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -69,6 +71,7 @@
 				3D82DCD2244C070D00C25BEA /* Actions.sks */,
 				3D82DCD4244C070D00C25BEA /* GameScene.swift */,
 				3D82DCD6244C070D00C25BEA /* GameViewController.swift */,
+				3DC6709524518825004BB1BC /* theBoldFont.ttf */,
 				3D82DCE6244C316200C25BEA /* bulletsoundeffect.wav */,
 				3DC6709324503912004BB1BC /* explosionSound.wav */,
 				3D82DCD8244C070D00C25BEA /* Main.storyboard */,
@@ -141,6 +144,7 @@
 				3D82DCDA244C070D00C25BEA /* Main.storyboard in Resources */,
 				3D82DCD1244C070D00C25BEA /* GameScene.sks in Resources */,
 				3D82DCDC244C071800C25BEA /* Assets.xcassets in Resources */,
+				3DC6709624518825004BB1BC /* theBoldFont.ttf in Resources */,
 				3D82DCE7244C316200C25BEA /* bulletsoundeffect.wav in Resources */,
 				3D82DCDF244C071800C25BEA /* LaunchScreen.storyboard in Resources */,
 				3D82DCD3244C070D00C25BEA /* Actions.sks in Resources */,

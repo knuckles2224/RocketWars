@@ -11,6 +11,10 @@ import GameplayKit
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
     
+    var gameScore = 0 //var for the game's total score
+    
+    let scoreLabel = SKLabelNode(fontNamed: "The Bold Font ") //set up the label for score
+    
     //Gloabal vars
     let player = SKSpriteNode(imageNamed: "rockShip") //adds the rocket ship image, initialized outside of scope
     
@@ -84,6 +88,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         player.physicsBody!.contactTestBitMask = PhysicsGrouping.Enemy //physics group for when enemy hits player
         self.addChild(player) //add rocket image to scene
         
+        scoreLabel.text = "Score: 0"
+        scoreLabel.fontSize = 80
+        scoreLabel.fontColor = SKColor.purple
+        scoreLabel.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.left
+        scoreLabel.position = CGPoint(x: self.size.width * 0.20, y: 0.70) //position the label on the gamescene
+        scoreLabel.zPosition = 10 //make label later on top of everything
+        self.addChild(scoreLabel)
+        
+        
         startNewLevel() //start level call
     }//end didMove to view
     
@@ -121,6 +134,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         //check if the bullet made contact with the enemy
         if contactBody1.categoryBitMask  == PhysicsGrouping.Bullet && contactBody2.categoryBitMask == PhysicsGrouping.Enemy {
+            
+            //first update the score by calling function
+            addScore()
             
             if contactBody2.node != nil {
                 if contactBody2.node!.position.y > self.size.height {
@@ -275,4 +291,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
     }//end touchesMoved
     
+    //this function updates the score label on the gameScene, only gets called when a bulet collides with an enemy.
+    func addScore() {
+        
+        gameScore = gameScore + 1
+        scoreLabel.text = "Score: \(gameScore)"
+        
+    }//end AddScore
 }//end class GameScene
