@@ -13,6 +13,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     var gameScore = 0 //var for the game's total score
     
+    var gameLevel = 0 //keeps track of what level we are on
+    
     let scoreLabel = SKLabelNode(fontNamed: "The Bold Font ") //set up the label for score
     
     //Gloabal vars
@@ -175,24 +177,45 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }//end spawn explosion
     
     func startNewLevel() {
+        
+        //incrememnt level everyimte this function is called
+        gameLevel = gameLevel + 1
+        
+        //stop the actions
+        if self.action(forKey: "Incoming Enemies") != nil {
+            self.removeAction(forKey: "Incoming Enemies")
+        }
+        
+        //set up level difficulty
+        var levelDuration = TimeInterval()
+        
+        switch gameLevel {
+        case 1: levelDuration = 1.5
+        case 2: levelDuration = 1.25
+        case 3: levelDuration = 1.0
+        case 4: levelDuration = 0.75
+        case 5: levelDuration = 0.50
+        default:
+            levelDuration = 0.25
+            print("more than 5 levels passed")
+        }
         //actions to spawn enemy
         let spawn = SKAction.run(spawnEnemy)
         
         //gap between enemy spawning
-        let waitToSpawn = SKAction.wait(forDuration: 1)
+        let waitToSpawn = SKAction.wait(forDuration: levelDuration)
         
         //call the sequence and let run in that order
-        let spawnSequence = SKAction.sequence([spawn, waitToSpawn])
+        let spawnSequence = SKAction.sequence([waitToSpawn, spawn])
         
         //keep spawning enemies
         let spawnForever = SKAction.repeatForever(spawnSequence)
         
-        //run action on the scene
-        self.run(spawnForever)
-        
-        
+        //run action on the scene with a key reference
+        self.run(spawnForever, withKey: "Incoming Enemies")
         
     }//end startNewLevel()
+    
     //function firebullet gets called whem player taps screen, it will animate a shooting bullet from the player position going up the screen.
     func fireBullet() {
         //add bullet image to scene
@@ -296,6 +319,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         gameScore = gameScore + 1
         scoreLabel.text = "Score: \(gameScore)"
+        
+        //after adding score, check to see if a cretain amounf of points reached to get to the next level, if you score then, then move to level 2, etc.
+        if gameScore == 10 {
+            startNewLevel() //call from level 1 to level 2
+        }else if  gameScore == 25 {
+            startNewLevel() //call from level 2 to level 3
+        }else if gameScore == 40 {
+            startNewLevel() //call from level 3 to level 4
+        }else if gameScore == 75 {
+            startNewLevel() //call from level 4 to level 5
+        }
+        
         
     }//end AddScore
 }//end class GameScene
