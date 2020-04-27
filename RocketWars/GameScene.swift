@@ -11,6 +11,14 @@ import GameplayKit
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
     
+    enum gameState{
+        case mainScreen //before starting the game
+        case inGame //during the game
+        case endScreen //after the game
+    }//end enum gameState
+    
+    var currentGameState = gameState.inGame //default state for now
+    
     var gameScore = 0 //var for the game's total score
     
     var gameLevel = 0 //keeps track of what level we are on
@@ -145,6 +153,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             contactBody1.node?.removeFromParent()
             contactBody2.node?.removeFromParent()
             
+            gameOver() //call to func named gameOver() after collision with enemy
         }//end player and enemy contacts
         
         //check if the bullet made contact with the enemy
@@ -233,6 +242,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func fireBullet() {
         //add bullet image to scene
         let bullet = SKSpriteNode(imageNamed: "bullet")
+        bullet.name = "Bullet" //the reference name to the object
         bullet.setScale(1)
         bullet.position = player.position //bullet will shoot where player rocket is
         bullet.zPosition = 1 //inbetween background and rocket
@@ -267,6 +277,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         //spawn actual enemy
         let enemy = SKSpriteNode(imageNamed: "22")
+        enemy.name = "Enemy" //the node's reference name to be used in game over
         enemy.setScale(0.75)
         enemy.position = startPoint
         enemy.zPosition = 2
@@ -299,8 +310,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     //this runs when someone clicks or taps on the screen
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        fireBullet() //method call to fireBullet()
-        
+        //only fires bullet if in Game
+        if currentGameState == gameState.inGame {
+            fireBullet() //method call to fireBullet()
+        }//end if gameState == inGame
     }//end fireBullet()
     
     //this runs when a player slides their fingers causing an event change
@@ -313,8 +326,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             
             let movement = pointofTouch.x - previousPointOfTouch.x //calculate the origin of touch and whre last touch is
             
+            //only update movement if gameState is active
+            if currentGameState == gameState.inGame {
             player.position.x = player.position.x + movement //update the rocket with current rocket position and however far you moved
-            
+            }//end if currentGameState == inGame
             //keep rocket ship in gameArea after moving
             //check if it is too far right
             if player.position.x > gameArea.maxX - player.size.width / 2{
@@ -356,5 +371,34 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let normalizeLivesText = SKAction.scale(to: 1.0, duration: 0.20)
         let flashLivesLabel = SKAction.sequence([enhanceLivesText,normalizeLivesText])
         gameLivesLabel.run(flashLivesLabel)
+        
+        if gameLives == 0 { //check if lives is 0
+            gameOver()
+        }//end if lives = 0
     }
+    
+    func gameOver() {
+        //game over is enemy makes contact with player || game over if lives = 0
+        
+        currentGameState = gameState.endScreen //change the game state when entering gameOver()
+        
+        //change to game over scene and stop the game scene
+        self.removeAllActions()
+        
+            //freezes enemies on screen
+        self.enumerateChildNodes(withName: "Bullet") { //Generates a list of all objects with reference name
+            bullet, stop in //Cycle through the list
+            bullet.removeAllActions() //remove all the bullets in the list
+        }
+        
+        //freezes all live bullets
+        self.enumerateChildNodes(withName: "Enemy") { //Generate the list of enemies on GameSsene
+            enemy, stop in
+            enemy.removeAllActions()
+        }
+        
+        
+
+        
+    }//end gameOver
 }//end class GameScene
