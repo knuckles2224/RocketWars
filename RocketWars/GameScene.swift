@@ -9,6 +9,8 @@
 import SpriteKit
 import GameplayKit
 
+var gameScore = 0
+
 class GameScene: SKScene, SKPhysicsContactDelegate {
     
     enum gameState{
@@ -18,8 +20,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }//end enum gameState
     
     var currentGameState = gameState.inGame //default state for now
-    
-    var gameScore = 0 //var for the game's total score
     
     var gameLevel = 0 //keeps track of what level we are on
     
@@ -80,6 +80,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     //this function runs as soon as scene loads up
     override func didMove(to view: SKView) {
+        
+        gameScore = 0 //reinitialize score everytime we move back to gameScene
         
         self.physicsWorld.contactDelegate = self// set up the physic contacts for the scene
         
