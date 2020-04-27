@@ -296,8 +296,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let deleteEnemy = SKAction.removeFromParent()
         let loseLife = SKAction.run(decrementGameLife)
         let enemySequence = SKAction.sequence([moveEnemy, deleteEnemy, loseLife])
-        enemy.run(enemySequence)
         
+        if currentGameState == gameState.inGame {
+            enemy.run(enemySequence)
+        }
         //get difference of start and endpoints of enemy to rotate ship correctly
         let dx = endPoint.x - startPoint.x
         let dy = endPoint.y - startPoint.y
@@ -398,7 +400,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
         
         
-
-        
+        let changeSceneAction = SKAction.run(changeScene)  //calls func named changeScene
+        let waitToChangeScene = SKAction.wait(forDuration: 1) //waits for x amount of second
+        let changeSceneSequene = SKAction.sequence([waitToChangeScene, changeSceneAction])
+        self.run(changeSceneSequene)
     }//end gameOver
+    
+    func changeScene() {
+        let switchScenes = GameOverScene(size: self.size) //moves to the gameOverScene with same size
+        switchScenes.scaleMode = self.scaleMode //scales the size
+        let transitionScene = SKTransition.fade(withDuration: 1.0) //trasitions the Scene
+        self.view!.presentScene(switchScenes, transition: transitionScene) //gets rid off current scene and switch to GameOverScene
+        
+        
+    }//end changeScene
 }//end class GameScene
