@@ -94,7 +94,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         //set up 2background image
         for i in 0...1 {
-            let backGround = SKSpriteNode(imageNamed: "earth") //image name can be found in assets
+            let backGround = SKSpriteNode(imageNamed: "stars") //image name can be found in assets
             backGround.size = self.size //set bg to scene size
             backGround.anchorPoint = CGPoint(x: 0.5, y: 0) //anchor point is bottom center of screen now
             backGround.position = CGPoint(x: self.size.width/2, y: self.size.height * CGFloat(i)) //image in bottom of screen and regular size screen
@@ -103,7 +103,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             self.addChild(backGround) //add background to scene
         }//end for making 2 backgrounds
         //set up player/rocket
-        player.setScale(0.75) //scales the image
+        player.setScale(0.50) //scales the image
         player.position = CGPoint(x: self.size.width/2, y: 0 - player.size.height) //start in middle screen, and at bottom of the screen
         player.zPosition = 2 // 2 postion in front of background
         player.physicsBody = SKPhysicsBody(rectangleOf: player.size) //give the rocket a "physics body"
@@ -155,8 +155,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     override func update(_ currentTime: TimeInterval) {
         //calculate time passed in between each frame
         if frameTime == 0 {
-            //frame 0
-            frameTime = currentTime
+            frameTime = currentTime  //frame 0
         } else {
             deltaFrameTime = currentTime - frameTime
             frameTime = currentTime
@@ -166,7 +165,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         self.enumerateChildNodes(withName: "Background") { //generate a list with anything named "Background"
             background, stop in
-            background.position.y -= amountToMoveBackGround
+            
+            if self.currentGameState == gameState.inGame {
+                background.position.y -= amountToMoveBackGround //moves background if inGame state
+            }
             if background.position.y < -self.size.height { //if background scrolled to bottom of screen
                 background.position.y += self.size.height * 2 //*2 to move to top of screen
             }

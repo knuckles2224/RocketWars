@@ -15,7 +15,7 @@ class GameOverScene: SKScene {
     
     override func didMove(to view: SKView) {
         //needs a background
-        let backGround = SKSpriteNode(imageNamed: "background") //image name can be found in assets
+        let backGround = SKSpriteNode(imageNamed: "stars") //image name can be found in assets
         backGround.position = CGPoint(x: self.size.width/2, y: self.size.height/2)
         backGround.zPosition = 0
         self.addChild(backGround)
