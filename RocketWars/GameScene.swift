@@ -19,7 +19,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         case endScreen //after the game
     }//end enum gameState
     
-    var currentGameState = gameState.inGame //default state for now
+    let tapToBeginLabel = SKLabelNode(fontNamed: "The Bold Font") //adding a label for player to tap to begin game
+    
+    var currentGameState = gameState.mainScreen //default state for now
     
     var gameLevel = 0 //keeps track of what level we are on
     
@@ -94,7 +96,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         //set up player/rocket
         player.setScale(0.75) //scales the image
-        player.position = CGPoint(x: self.size.width/2, y: self.size.height * 0.2) //start in middle screen, but lower in y pos
+        player.position = CGPoint(x: self.size.width/2, y: 0 - player.size.height) //start in middle screen, and at bottom of the screen
         player.zPosition = 2 // 2 postion in front of background
         player.physicsBody = SKPhysicsBody(rectangleOf: player.size) //give the rocket a "physics body"
         player.physicsBody!.affectedByGravity = false //turn off the gravity for our player object
@@ -109,7 +111,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         scoreLabel.fontSize = 80
         scoreLabel.fontColor = SKColor.white
         scoreLabel.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.left
-        scoreLabel.position = CGPoint(x: self.size.width * 0.15, y: self.size.height * 0.95) //position the label on the gamescene
+        scoreLabel.position = CGPoint(x: self.size.width * 0.15, y: self.size.height + scoreLabel.frame.size.height) //position the label on the gamescene
         scoreLabel.zPosition = 10 //make label layer on top of everything
         self.addChild(scoreLabel)
         
@@ -118,11 +120,27 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         gameLivesLabel.fontSize = 80
         gameLivesLabel.fontColor = SKColor.white
         gameLivesLabel.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.right
-        gameLivesLabel.position = CGPoint(x: self.size.width * 0.85, y: self.size.height * 0.95)
+        gameLivesLabel.position = CGPoint(x: self.size.width * 0.85, y: self.size.height + gameLivesLabel.frame.size.height)
         gameLivesLabel.zPosition = 10
         self.addChild(gameLivesLabel) //add the gameelivesLbael to the gameScene
         
-        startNewLevel() //start level call
+        let scrollsOntoScreen = SKAction.moveTo(y: self.size.height * 0.90, duration: 0.3) //Drags the lives and score onto the screen
+        scoreLabel.run(scrollsOntoScreen)
+        gameLivesLabel.run(scrollsOntoScreen)
+        
+        
+        tapToBeginLabel.text = "Tap to Begin"
+        tapToBeginLabel.fontSize = 100
+        tapToBeginLabel.fontColor = SKColor.white
+        tapToBeginLabel.zPosition = 1
+        tapToBeginLabel.position = CGPoint(x: self.size.width/2, y: self.size.height/2)
+        tapToBeginLabel.alpha = 0 //0 trasparency is completely see through
+        self.addChild(tapToBeginLabel)
+        
+        let fadeInView = SKAction.fadeIn(withDuration: 0.4)
+        tapToBeginLabel.run(fadeInView)
+        
+        //startNewLevel() //start level call
     }//end didMove to view
     
     //function that gets called when 2 bodies make contact with each other
