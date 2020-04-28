@@ -21,6 +21,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     let tapToBeginLabel = SKLabelNode(fontNamed: "The Bold Font") //adding a label for player to tap to begin game
     
+    var frameTime: TimeInterval = 0 //stores time inbtween each frame that passes
+    var deltaFrameTime: TimeInterval = 0
+    var animateBackGroundFrame: CGFloat = 600.0 //background moves x points down the screen per second
+    
+    
     var currentGameState = gameState.mainScreen //default state for now
     
     var gameLevel = 0 //keeps track of what level we are on
@@ -87,13 +92,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         self.physicsWorld.contactDelegate = self// set up the physic contacts for the scene
         
-        //set up background image
-        let backGround = SKSpriteNode(imageNamed: "earth") //image name can be found in assets
-        backGround.size = self.size //set bg to scene size
-        backGround.position = CGPoint(x: self.size.width/2, y: self.size.height/2) //image in center of scene
-        backGround.zPosition = 0 // background gets lowest number for layering
-        self.addChild(backGround) //add background to scene
-        
+        //set up 2background image
+        for i in 0...1 {
+            let backGround = SKSpriteNode(imageNamed: "earth") //image name can be found in assets
+            backGround.size = self.size //set bg to scene size
+            backGround.anchorPoint = CGPoint(x: 0.5, y: 0) //anchor point is bottom center of screen now
+            backGround.position = CGPoint(x: self.size.width/2, y: self.size.height * CGFloat(i)) //image in bottom of screen and regular size screen
+            backGround.zPosition = 0 // background gets lowest number for layering
+            backGround.name = "Background"
+            self.addChild(backGround) //add background to scene
+        }//end for making 2 backgrounds
         //set up player/rocket
         player.setScale(0.75) //scales the image
         player.position = CGPoint(x: self.size.width/2, y: 0 - player.size.height) //start in middle screen, and at bottom of the screen
@@ -142,6 +150,30 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         //startNewLevel() //start level call
     }//end didMove to view
+    
+    //this function runs every frame that passes in a game
+    override func update(_ currentTime: TimeInterval) {
+        //calculate time passed in between each frame
+        if frameTime == 0 {
+            //frame 0
+            frameTime = currentTime
+        } else {
+            deltaFrameTime = currentTime - frameTime
+            frameTime = currentTime
+        }
+        
+        let amountToMoveBackGround = animateBackGroundFrame * CGFloat(deltaFrameTime) //calculate the time passed and frame to move background
+        
+        self.enumerateChildNodes(withName: "Background") { //generate a list with anything named "Background"
+            background, stop in
+            background.position.y -= amountToMoveBackGround
+            if background.position.y < -self.size.height { //if background scrolled to bottom of screen
+                background.position.y += self.size.height * 2 //*2 to move to top of screen
+            }
+        }
+        //adjust the 2 backgrounds by variable above
+        
+    }//end update()
     
     //function that gets called when 2 bodies make contact with each other
     func didBegin(_ contact: SKPhysicsContact) {
