@@ -258,6 +258,23 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
     }//end startNewLevel()
     
+    func startNewGame() {
+        // pregame state -> in game state
+        currentGameState = gameState.inGame
+        
+        //animation to fade the tap to begin label
+        let fadeOutTapToStart = SKAction.fadeIn(withDuration: 0.5)
+        let deleteTapToStart = SKAction.removeFromParent()
+        let deleteTapToStartSequence = SKAction.sequence([fadeOutTapToStart, deleteTapToStart])
+        tapToBeginLabel.run(deleteTapToStartSequence)
+        
+        let moveShipToScreen = SKAction.moveTo(y: self.size.height * 0.20, duration: 0.5)
+        let startLevel = SKAction.run(startNewLevel)
+        let startGameSequence = SKAction.sequence([moveShipToScreen,startLevel])
+        player.run(startGameSequence)
+        
+    }//end startNewGame
+    
     //function firebullet gets called whem player taps screen, it will animate a shooting bullet from the player position going up the screen.
     func fireBullet() {
         //add bullet image to scene
@@ -332,8 +349,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     //this runs when someone clicks or taps on the screen
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        
+        //if pregame
+        if currentGameState == gameState.mainScreen {
+            startNewGame()
+        }
         //only fires bullet if in Game
-        if currentGameState == gameState.inGame {
+        else if currentGameState == gameState.inGame {
             fireBullet() //method call to fireBullet()
         }//end if gameState == inGame
     }//end fireBullet()
