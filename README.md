@@ -1,4 +1,7 @@
 # RocketWars
+* Link to example of game play.
+
+  https://www.youtube.com/watch?v=Jw0WbG7HGwY&feature=youtu.be
 
 * Introduction:
 
