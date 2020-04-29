@@ -39,12 +39,21 @@ class GameOverScene: SKScene {
         gameOverLabel.zPosition = 1
         self.addChild(gameOverLabel)
         
-        //add the "Score" label to the GameOverScene
+        //add the "Dodge" label to the GameOverScene
+        let dodgeLabel = SKLabelNode(fontNamed: "The Bold Font")
+        dodgeLabel.text = "Dodge: \(gameLives)" //present the current score for that instance of the gameplay
+        dodgeLabel.fontSize = 150
+        dodgeLabel.fontColor = SKColor.white
+        dodgeLabel.position = CGPoint(x: self.size.width/2, y: self.size.height * 0.60)
+        dodgeLabel.zPosition = 1
+        self.addChild(dodgeLabel)
+        
+        //add the "Destroy" label to the GameOverScene
         let scoreLabel = SKLabelNode(fontNamed: "The Bold Font")
-        scoreLabel.text = "Score \(gameScore)" //present the current score for that instance of the gameplay
+        scoreLabel.text = "Destroy: \(gameScore)" //present the current score for that instance of the gameplay
         scoreLabel.fontSize = 150
         scoreLabel.fontColor = SKColor.white
-        scoreLabel.position = CGPoint(x: self.size.width/2, y: self.size.height * 0.60)
+        scoreLabel.position = CGPoint(x: self.size.width/2, y: self.size.height * 0.50)
         scoreLabel.zPosition = 1
         self.addChild(scoreLabel)
         
@@ -53,8 +62,8 @@ class GameOverScene: SKScene {
         var highScore = gameDefault.integer(forKey: "highScoreSaved") //save an int with the key
         
         //check for new high score
-        if gameScore > highScore {
-            highScore = gameScore //update high score
+        if gameLives > highScore {
+            highScore = gameLives //update high score
             gameDefault.set(highScore, forKey: "highScoreSaved") //sets the new high score using the key
         }//end gamescore > highscore
         
@@ -64,7 +73,7 @@ class GameOverScene: SKScene {
         highScoreLabel.fontSize = 150
         highScoreLabel.fontColor = SKColor.white
         highScoreLabel.zPosition = 1
-        highScoreLabel.position = CGPoint(x: self.size.width/2, y: self.size.height * 0.45)
+        highScoreLabel.position = CGPoint(x: self.size.width/2, y: self.size.height * 0.40)
         self.addChild(highScoreLabel)
     }//end didMove
     

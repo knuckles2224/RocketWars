@@ -4,12 +4,14 @@
 //
 //  Created by Anthony Onn on 4/19/20.
 //  Copyright © 2020 Anthony Onn. All rights reserved.
-//
-//******REMARK : LINE 250 , in switch(gameLevel) , changed case 1 level duration to 0.50 or 0.45 for intense dodging.
+//com
+
+//REMARK : LINE 250 , in switch(gameLevel) , changed case 1 level duration to 0.50 for intense dodging. or 1.50 for normal
 import SpriteKit
 import GameplayKit
 
 var gameScore = 0
+var gameLives = 0
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
     //let the gameArea be a type of CGRect to be able to calculate sizing
@@ -39,9 +41,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     // variable for default gameState
     var currentGameState = gameState.mainScreen
     
-    //variable for level and lives
+    //variable for level
     var gameLevel = 0
-    var gameLives = 99
+    
     
     //GameScene will have 3 node labels: Score, Lives, and "Tap to Begin"
     let gameLivesLabel = SKLabelNode(fontNamed: "The Bold Font")
@@ -72,6 +74,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     //this function runs as soon as scene loads up
     override func didMove(to view: SKView) {
+        gameLives = 0
         gameScore = 0 //reinitialize score everytime we move back to gameScene
         self.physicsWorld.contactDelegate = self // set up the physics contacts for the Gamescene
         
@@ -99,7 +102,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.addChild(player) //add rocket image to scene
         
         //graphical information on the gameScore label
-        scoreLabel.text = "Score: \(gameScore)"
+        scoreLabel.text = "Destroy: \(gameScore)"
         scoreLabel.fontSize = 80
         scoreLabel.fontColor = SKColor.white
         scoreLabel.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.left
@@ -108,7 +111,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.addChild(scoreLabel)
         
         //graphical information on the gameLivesLabel
-        gameLivesLabel.text = "Lives: \(gameLives)"
+        gameLivesLabel.text = "Dodge: \(gameLives)"
         gameLivesLabel.fontSize = 80
         gameLivesLabel.fontColor = SKColor.white
         gameLivesLabel.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.right
@@ -247,7 +250,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         var levelDuration = TimeInterval()
         
         switch gameLevel {
-            case 1: levelDuration = 1.5
+        case 1: levelDuration = 0.38 //original gameplay, is 1.50. intense mode is 0.38
             case 2: levelDuration = 1.25
             case 3: levelDuration = 1.0
             case 4: levelDuration = 0.75
@@ -393,16 +396,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func addScore() {
         //increment and update score label
         gameScore = gameScore + 1
-        scoreLabel.text = "Score: \(gameScore)"
+        scoreLabel.text = "Destroy: \(gameScore)"
         
         //after adding score, check to see if a certain amount of points reached to get to the next level, if you score then, then move to level 2, etc.
-        if gameScore == 5 {
+        if gameScore == 50 {
             startNewLevel() //call from level 1 to level 2
-        }else if  gameScore == 10 {
+        }else if  gameScore == 100 {
             startNewLevel() //call from level 2 to level 3
-        }else if gameScore == 15 {
+        }else if gameScore == 150 {
             startNewLevel() //call from level 3 to level 4
-        }else if gameScore == 30 {
+        }else if gameScore == 300 {
             startNewLevel() //call from level 4 to level 5
         }//end if gameScore == 30
     }//end addScore()
@@ -410,8 +413,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     //this fuction gets called when an enemy node gets to the bottom of the screen
     func decrementGameLife() {
         //decrement and update score label
-        gameLives = gameLives - 1
-        gameLivesLabel.text = "Lives: \(gameLives)"
+        gameLives = gameLives + 1
+        gameLivesLabel.text = "Dodge: \(gameLives)"
         
         //flash lives to the screen
         let enhanceLivesText = SKAction.scale(to: 1.5, duration: 0.20)
@@ -420,7 +423,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         gameLivesLabel.run(flashLivesLabel)
         
         //check if lives is 0
-        if gameLives == 0 {
+        if gameLives == -1 {
             gameOver()
         }//end if lives = 0
     }//end decrementGameLives()
