@@ -5,8 +5,8 @@
 //  Created by Anthony Onn on 4/19/20.
 //  Copyright © 2020 Anthony Onn. All rights reserved.
 //com
-
-//REMARK : LINE 250 , in switch(gameLevel) , changed case 1 level duration to 0.50 for intense dodging. or 1.50 for normal
+//Insanity mode version
+//REMARK : LINE 250-255 , in switch(gameLevel) , changed case 1 level duration to 0.50 for intense dodging. or 1.50 for normal
 import SpriteKit
 import GameplayKit
 
