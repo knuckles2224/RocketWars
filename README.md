@@ -6,14 +6,32 @@
   
 * Design:
 
-  The design of this application revolves all around a GameScene. 
-  
+  The design of this application revolves all around 3 SKScenes. 
+  * MainMenuScene:
+    * The MainMenuScene responsibility is to present SKLabels to the user to show them the title of the game, the author, and an option to press here to play. When the user taps in that area they will be redicrected to the gameScene.
+  * GameScene:
+    * The GameScene's responsibility, where most of the logic is, will be to handle everything the that runs in the game. So to provide the background, needed text, nodes for the players, nodes for the enemies, and to handle collision and point scoring.
+  * GameOverScene:
+    * The GameOverScene responsibility is to show when the game is over, when the player and the enemy collide. This scene's responsibility is to show the game over label, the amount of enemies you destroyed and dodged, and an option to restart, which will load you back into the gameScene.
 * Testing:
   
-  While writing each line of code, I run the application to see and try to test if anything has changed from the previous state rom when I last tested the code.That way I can see and check step by step that each line of codee is doing what it sjould do and interacting with what it should interact with. I tested things like moving the character off screen, and shooting, to which the sound effect of a bullet firing could be heard even when off screen, so I added lines of code to keep the player object within the GameScene. Testing logic of the code as it is written.
+  While writing each line of code, I run the application to see and try to test if anything has changed from the previous state from when I last tested the code. That way I can see and check step by step that each line of code is doing what it should do and interacting with what it should interact with. I tested things like moving the character off screen, and shooting, to which the sound effect of a bullet firing could be heard even when off screen, so I added lines of code to keep the player object within the GameScene. Testing logic of the code as it is written.
+  
+  Also keeping the display nodes to be true, so I can keep track of how many nodes are on any Scene at a given time.
   
 * Challenges:
   
+  First time writing a game application ever! That's why I wanted to make something just 2-dimensional, to get an understanding of how an arcade base game may be developed. The challenges were figuring out a good structure of the code, that way when you even need to go back and add a feature, it will be easy to change without breaking the entire code.
+  
+  Figuring out the math needed to calculate where nodes should be, how to calculate tracjectory, keeping track of points.
+  
 * Remarks:
   
+  This was really fun to make!
+  
+  My resource for studying and learning this game developing was based of this tutorial from Youtube. Goes in depth and explains why things should be a certain way.
+  
+  All code in this project was written by me.
+  
+  https://www.youtube.com/playlist?list=PLrL5aCF7Ods-6C7QjzXibUZoYjMzhWBfL
  
