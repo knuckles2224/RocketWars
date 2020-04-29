@@ -5,7 +5,7 @@
 //  Created by Anthony Onn on 4/19/20.
 //  Copyright © 2020 Anthony Onn. All rights reserved.
 //
-
+//******REMARK : LINE 250 , in switch(gameLevel) , changed case 1 level duration to 0.50 or 0.45 for intense dodging.
 import SpriteKit
 import GameplayKit
 
@@ -41,7 +41,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     //variable for level and lives
     var gameLevel = 0
-    var gameLives = 9
+    var gameLives = 99
     
     //GameScene will have 3 node labels: Score, Lives, and "Tap to Begin"
     let gameLivesLabel = SKLabelNode(fontNamed: "The Bold Font")
@@ -87,7 +87,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }//end for making 2 backgrounds
         
         //set up player/rocket
-        player.setScale(0.50) //scales the image
+        player.setScale(0.40) //scales the image
         player.position = CGPoint(x: self.size.width/2, y: 0 - player.size.height) //start in middle screen, and at bottom of the screen
         player.zPosition = 2 // 2 postion in front of background
         player.physicsBody = SKPhysicsBody(rectangleOf: player.size) //give the rocket a "physics body"
@@ -323,7 +323,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         //spawn actual enemy
         let enemy = SKSpriteNode(imageNamed: "22")
         enemy.name = "Enemy" //the node's reference name to be used in game over
-        enemy.setScale(0.75)
+        enemy.setScale(0.55)
         enemy.position = startPoint
         enemy.zPosition = 2
         enemy.physicsBody = SKPhysicsBody(rectangleOf: enemy.size)
