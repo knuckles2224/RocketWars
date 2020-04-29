@@ -43,8 +43,26 @@ class MainMenuScene: SKScene{
         startGameTitle.fontColor = SKColor.white
         startGameTitle.position = CGPoint(x: self.size.width / 2, y: self.size.height * 0.25)
         startGameTitle.zPosition = 1
+        startGameTitle.name = "START" //give the node a reference name
         self.addChild(startGameTitle)
-        
-        
     }//end didMove
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        for touch: AnyObject in touches {
+            let pointTouched = touch.location(in: self) // variable to get where you touched in the MainScene
+            let tappedNode = nodes(at: pointTouched)// variable stores the node of where you tapped
+            
+            if tappedNode[0].name == "START" {
+                //move into the GameScene
+                let sceneToMoveTo = GameScene(size: self.size)
+                sceneToMoveTo.scaleMode = self.scaleMode
+                //perform animation to switch scenes
+                let myTransition = SKTransition.fade(withDuration: 0.50)
+                self.view!.presentScene(sceneToMoveTo, transition: myTransition)
+            }
+                
+            
+            
+        }//end for touches
+    }//end touchesBegan
 }//end MainMenuScene
