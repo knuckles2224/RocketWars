@@ -35,10 +35,10 @@
   
   https://www.youtube.com/playlist?list=PLrL5aCF7Ods-6C7QjzXibUZoYjMzhWBfL
   
-  <img src="https://github.com/knuckles2224/RocketWars/blob/master/Screen%20Shot%202020-04-29%20at%204.56.27%20PM.png" width="240">
+  <img src="https://github.com/knuckles2224/RocketWars/blob/master/Screen%20Shot%202020-04-29%20at%204.56.27%20PM.png" width="300">
   
-  <img src="https://github.com/knuckles2224/RocketWars/blob/master/Screen%20Shot%202020-04-29%20at%204.56.52%20PM.png" width="240">
+  <img src="https://github.com/knuckles2224/RocketWars/blob/master/Screen%20Shot%202020-04-29%20at%204.56.52%20PM.png" width="300">
    
-  <img src="https://github.com/knuckles2224/RocketWars/blob/master/Screen%20Shot%202020-04-29%20at%204.57.07%20PM.png" width="250">
+  <img src="https://github.com/knuckles2224/RocketWars/blob/master/Screen%20Shot%202020-04-29%20at%204.57.07%20PM.png" width="300">
   
-  <img src="https://github.com/knuckles2224/RocketWars/blob/master/Screen%20Shot%202020-04-29%20at%205.39.14%20PM.png" width="250">
+  <img src="https://github.com/knuckles2224/RocketWars/blob/master/Screen%20Shot%202020-04-29%20at%205.39.14%20PM.png" width="310">
