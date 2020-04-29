@@ -19,6 +19,7 @@
 		3DC6709424503912004BB1BC /* explosionSound.wav in Resources */ = {isa = PBXBuildFile; fileRef = 3DC6709324503912004BB1BC /* explosionSound.wav */; };
 		3DC6709624518825004BB1BC /* theBoldFont.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3DC6709524518825004BB1BC /* theBoldFont.ttf */; };
 		3DC670982456EFCA004BB1BC /* GameOverScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DC670972456EFCA004BB1BC /* GameOverScene.swift */; };
+		3DC6709A24591486004BB1BC /* MainMenuScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DC6709924591486004BB1BC /* MainMenuScene.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +37,7 @@
 		3DC6709324503912004BB1BC /* explosionSound.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = explosionSound.wav; sourceTree = "<group>"; };
 		3DC6709524518825004BB1BC /* theBoldFont.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = theBoldFont.ttf; sourceTree = "<group>"; };
 		3DC670972456EFCA004BB1BC /* GameOverScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameOverScene.swift; sourceTree = "<group>"; };
+		3DC6709924591486004BB1BC /* MainMenuScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenuScene.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -74,6 +76,7 @@
 				3D82DCD4244C070D00C25BEA /* GameScene.swift */,
 				3DC670972456EFCA004BB1BC /* GameOverScene.swift */,
 				3D82DCD6244C070D00C25BEA /* GameViewController.swift */,
+				3DC6709924591486004BB1BC /* MainMenuScene.swift */,
 				3DC6709524518825004BB1BC /* theBoldFont.ttf */,
 				3D82DCE6244C316200C25BEA /* bulletsoundeffect.wav */,
 				3DC6709324503912004BB1BC /* explosionSound.wav */,
@@ -161,6 +164,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3DC6709A24591486004BB1BC /* MainMenuScene.swift in Sources */,
 				3D82DCD5244C070D00C25BEA /* GameScene.swift in Sources */,
 				3D82DCD7244C070D00C25BEA /* GameViewController.swift in Sources */,
 				3DC670982456EFCA004BB1BC /* GameOverScene.swift in Sources */,
