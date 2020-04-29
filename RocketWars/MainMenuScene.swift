@@ -9,7 +9,9 @@
 import Foundation
 import SpriteKit //turns the class into a scene
 
+//This class acts as the Main Menu for the entire Game Scene. The class will have label nodes for the Game's title, my name and also a label that acts as a button for the start game option.
 class MainMenuScene: SKScene{
+    
     //makes the main menu in the scene
     override func didMove(to view: SKView) {
         //set up the background for the main menu scene
@@ -47,6 +49,7 @@ class MainMenuScene: SKScene{
         self.addChild(startGameTitle)
     }//end didMove
     
+    //This method will scan, while in the mainMenuScene, for if you touch the "Start New Game" label
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         for touch: AnyObject in touches {
             let pointTouched = touch.location(in: self) // variable to get where you touched in the MainScene
@@ -59,10 +62,7 @@ class MainMenuScene: SKScene{
                 //perform animation to switch scenes
                 let myTransition = SKTransition.fade(withDuration: 0.50)
                 self.view!.presentScene(sceneToMoveTo, transition: myTransition)
-            }
-                
-            
-            
+            }//end if tappedNode == START
         }//end for touches
     }//end touchesBegan
 }//end MainMenuScene
