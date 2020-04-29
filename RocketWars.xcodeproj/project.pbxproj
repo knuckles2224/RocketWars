@@ -20,6 +20,7 @@
 		3DC6709624518825004BB1BC /* theBoldFont.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3DC6709524518825004BB1BC /* theBoldFont.ttf */; };
 		3DC670982456EFCA004BB1BC /* GameOverScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DC670972456EFCA004BB1BC /* GameOverScene.swift */; };
 		3DC6709A24591486004BB1BC /* MainMenuScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DC6709924591486004BB1BC /* MainMenuScene.swift */; };
+		3DC6709C24592246004BB1BC /* SongMidnight.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 3DC6709B24592246004BB1BC /* SongMidnight.mp3 */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -38,6 +39,7 @@
 		3DC6709524518825004BB1BC /* theBoldFont.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = theBoldFont.ttf; sourceTree = "<group>"; };
 		3DC670972456EFCA004BB1BC /* GameOverScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameOverScene.swift; sourceTree = "<group>"; };
 		3DC6709924591486004BB1BC /* MainMenuScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenuScene.swift; sourceTree = "<group>"; };
+		3DC6709B24592246004BB1BC /* SongMidnight.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = SongMidnight.mp3; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -80,6 +82,7 @@
 				3DC6709524518825004BB1BC /* theBoldFont.ttf */,
 				3D82DCE6244C316200C25BEA /* bulletsoundeffect.wav */,
 				3DC6709324503912004BB1BC /* explosionSound.wav */,
+				3DC6709B24592246004BB1BC /* SongMidnight.mp3 */,
 				3D82DCD8244C070D00C25BEA /* Main.storyboard */,
 				3D82DCDB244C071800C25BEA /* Assets.xcassets */,
 				3D82DCDD244C071800C25BEA /* LaunchScreen.storyboard */,
@@ -151,6 +154,7 @@
 				3D82DCD1244C070D00C25BEA /* GameScene.sks in Resources */,
 				3D82DCDC244C071800C25BEA /* Assets.xcassets in Resources */,
 				3DC6709624518825004BB1BC /* theBoldFont.ttf in Resources */,
+				3DC6709C24592246004BB1BC /* SongMidnight.mp3 in Resources */,
 				3D82DCE7244C316200C25BEA /* bulletsoundeffect.wav in Resources */,
 				3D82DCDF244C071800C25BEA /* LaunchScreen.storyboard in Resources */,
 				3D82DCD3244C070D00C25BEA /* Actions.sks in Resources */,

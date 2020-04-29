@@ -9,11 +9,29 @@
 import UIKit
 import SpriteKit
 import GameplayKit
+import AVFoundation //code for adding audio
 
 class GameViewController: UIViewController {
+    
+    var backgroundMusic = AVAudioPlayer()
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        //tell the AVAudioPlayer to player song
+        let filePath = Bundle.main.path(forResource: "SongMidnight", ofType: "mp3") //type in the track name here
+        let songAudio = NSURL(fileURLWithPath: filePath!) //pass the audio path
+        
+        //try to play the music
+        do {
+            backgroundMusic = try AVAudioPlayer(contentsOf: songAudio as URL)
+        } catch {
+            return print("audio missing")
+        }// end do catch
+        
+        //loops the song
+        backgroundMusic.numberOfLoops = -1 //loops forever with negtive number
+        backgroundMusic.play()
         
         if let view = self.view as! SKView? {
             // Load the SKScene from 'GameScene.sks'
